@@ -4,8 +4,9 @@ import sys
 from model import *
 from camera import Camera
 
+
 class GraphicsEngine:
-    def __init__(self, win_size=(1600,900)):
+    def __init__(self, win_size=(1600, 900)):
         pg.init()
 
         self.WIN_SIZE = win_size
@@ -20,31 +21,29 @@ class GraphicsEngine:
 
         self.clock = pg.time.Clock()
 
-        self.camera = Camera()
+        self.camera = Camera(self)
 
         self.scene = Cube(self)
 
-    
     def check_events(self):
         for event in pg.event.get():
-            if event.type == pg.QUIT or (event.type==pg.KEYDOWN and event.key == pg.K_ESCAPE):
+            if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.scene.destroy()
                 pg.quit()
                 sys.exit()
-        
+
     def render(self):
         self.ctx.clear(color=(0.08, 0.16, 0.18))
         self.scene.render()
         pg.display.flip()
-    
+
     def run(self):
         while True:
             self.check_events()
             self.render()
             self.clock.tick(60)
 
+
 if __name__ == "__main__":
     graphicsEngine = GraphicsEngine()
     graphicsEngine.run()
-    
-
